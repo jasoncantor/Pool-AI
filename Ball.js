@@ -1,23 +1,23 @@
 class Ball {
 
-  float radius = 10;
+  var radius = 10;
   Body body;//the body representing the ball in the box2d world
-  boolean isWhite = false;
-  boolean stopped = true; //has the ball stopped or is it still moving
+  var isWhite = false;
+  var stopped = true; //has the ball stopped or is it still moving
   Box2DProcessing world;
-  boolean sunk = false;//whether the ball is sunk or not
+  var sunk = false;//whether the ball is sunk or not
   color colour;//colour of the ball
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //constructor
-  Ball(float x, float y, Box2DProcessing box2d, color col) {
+  Ball(var x, var y, Box2DProcessing box2d, color col) {
 
     colour = col;
     world = box2d;
     Vec2 pos = new Vec2(x, y);
 
 
-    float r = world.scalarPixelsToWorld(radius);//convert the radius to world coordinates
+    var r = world.scalarPixelsToWorld(radius);//convert the radius to world coordinates
 
     //CREATE BODY DEFINITION
     BodyDef df = new BodyDef();
@@ -43,7 +43,7 @@ class Ball {
     body.createFixture(fd);
   }
   //------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  void applyFriction() {//called every step to simulate friction between the table and ball
+  function applyFriction() {//called every step to simulate friction between the table and ball
     Vec2 vel = body.getLinearVelocity(); 
     vel.mulLocal(0.98);//slow by 2%
     if (vel.length() < 4) {//increase friction when slower
@@ -56,12 +56,12 @@ class Ball {
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //whether the ball is in a hole or not
-  boolean isInHole() {
+  var isInHole() {
     if (sunk) {//if ball is already sunk then problem solved
       return true;
     }
     Vec2 pos = world.getBodyPixelCoord(body);//get the position and if its within 15 of a holes center then it is sunk
-    for (int i =0; i < 6; i++) {
+    for (var i =0; i < 6; i++) {
       if (dist(pos.x, pos.y, tables[0].holes[i].pos.x, tables[0].holes[i].pos.y) < 15) {
         Vec2 vel = body.getLinearVelocity(); 
         vel.mulLocal(0);//set speed to 0
@@ -74,7 +74,7 @@ class Ball {
   }
 
   //------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  boolean isStopped() {//is the ball stopped
+  var isStopped() {//is the ball stopped
 
     if (body.getLinearVelocity().length() == 0) {
       return true;
@@ -83,16 +83,16 @@ class Ball {
     }
   }
   //------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  void update() {//update ball (kind of useless but I though I would do more than just apply friction each update)
+  function update() {//update ball (kind of useless but I though I would do more than just apply friction each update)
     applyFriction();
   }
   //------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //draw a circle representing the ball
-  void show() {
+  function show() {
     if (!sunk) {//if sunk then dont bother showing it
       Vec2 pos = world.getBodyPixelCoord(body); //get position
 
-      pushMatrix();
+      push();
       translate(pos.x, pos.y);
       if (isWhite) {//choose colour
         fill(255);
@@ -101,12 +101,12 @@ class Ball {
       }
       noStroke();
       ellipse(0, 0, 2*radius, 2*radius);//draw ball
-      popMatrix();
+      pop();
     }
   }
   //------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //simulates a shot
-  void applyForce(Vec2 force) {
+  function applyForce(Vec2 force) {
     Vec2 scaledForce = new Vec2(force.x, force.y);
     scaledForce.mulLocal(500000);
     body.applyForce(scaledForce, body.getWorldCenter());//apply force on ball

@@ -25,7 +25,7 @@ class Cushions {
   
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------  
  //creates a cushion in the box2d world with input position and dimensions 
-  void createCushion(int posX, int posY, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int bodyNo) {
+  function createCushion(var posX, var posY, var x1, var y1, var x2, var y2, var x3, var y3, var x4, var y4, var bodyNo) {
     //CREATE BODY DEFITION
     BodyDef bd = new BodyDef();
     bd.type = BodyType.STATIC;//STATIC means that the body is fixed 
@@ -56,7 +56,7 @@ class Cushions {
   }
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
  //draw the cushions as polygons
-  void show() {
+  function show() {
     
     fill(40);
     //top left cushion
