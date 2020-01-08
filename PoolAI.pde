@@ -12,7 +12,7 @@ import org.jbox2d.dynamics.contacts.*;
 
 Population pop;//the population of pool players
 Box2DProcessing[] box2d;//each player needs an individual world so this array stores them
-int popSize = 200;//the amount of players tested at once
+int popSize = 2;//the amount of players tested at once
 table[] tables;//each player also needs a table
 int speed = 60;//frameRate
 
